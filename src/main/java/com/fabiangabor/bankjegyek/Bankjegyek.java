@@ -26,7 +26,7 @@ public class Bankjegyek {
         gui.add(tools, BorderLayout.PAGE_START);
 
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
-        bankjegyPanel = new JPanel(new GridLayout(6, 6));
+        bankjegyPanel = new JPanel(new GridLayout(0, 6));
         gui.add(bankjegyPanel);
 
         // letrehozzuk a negyzeteket, 64x64 meretet lefoglalunk es elmentjuk a squares matrixban
