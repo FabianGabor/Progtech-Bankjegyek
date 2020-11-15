@@ -9,10 +9,15 @@ public class Bankjegyek {
     private JPanel bankjegyPanel;
 
     Bankjegyek() {
+        initializeGui();
     }
 
     public final JComponent getGui() {
         return gui;
+    }
+
+    public final void initializeGui() {
+
     }
 
     public static void main(String[] args) {
