@@ -43,6 +43,16 @@ public class Bankjegyek {
                 squares[j][i] = b;
             }
         }
+
+        // hozzaadjuk a bankjegyPanel-hez a letrehozott negyzeteket
+        // az utolso oszlopba a sorok osszegenek fenntartott JLabel kerul
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                bankjegyPanel.add(squares[j][i]);
+            }
+            // jobb oszlop osszegek helye
+            bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
+        }
     }
 
     public static void main(String[] args) {
