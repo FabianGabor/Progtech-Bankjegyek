@@ -3,6 +3,7 @@ package com.fabiangabor.bankjegyek;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Bankjegyek {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -27,6 +28,21 @@ public class Bankjegyek {
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
         bankjegyPanel = new JPanel(new GridLayout(6, 6));
         gui.add(bankjegyPanel);
+
+        // letrehozzuk a negyzeteket, 64x64 meretet lefoglalunk es elmentjuk a squares matrixban
+        Insets buttonMargin = new Insets(0,0,0,0);
+        for (int i = 0; i < squares.length; i++) {
+            for (int j = 0; j < squares[i].length; j++) {
+                JButton b = new JButton();
+                b.setMargin(buttonMargin);
+
+                ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+                b.setIcon(icon);
+                b.setBackground(Color.WHITE);
+
+                squares[j][i] = b;
+            }
+        }
     }
 
     public static void main(String[] args) {
