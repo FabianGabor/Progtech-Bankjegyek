@@ -53,6 +53,10 @@ public class Bankjegyek {
             // jobb oszlop osszegek helye
             bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
         }
+        // also sorba az oszlopok osszege kerul
+        for (int i = 0; i < 6; i++) {
+            bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
+        }
     }
 
     public static void main(String[] args) {
