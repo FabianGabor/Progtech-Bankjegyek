@@ -1,6 +1,7 @@
 package com.fabiangabor.bankjegyek;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Bankjegyek {
@@ -17,7 +18,15 @@ public class Bankjegyek {
     }
 
     public final void initializeGui() {
+        // alap ablak
+        gui.setBorder(new EmptyBorder(5, 5, 5, 5));
+        JToolBar tools = new JToolBar();
+        tools.setFloatable(false);
+        gui.add(tools, BorderLayout.PAGE_START);
 
+        // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
+        bankjegyPanel = new JPanel(new GridLayout(6, 6));
+        gui.add(bankjegyPanel);
     }
 
     public static void main(String[] args) {
