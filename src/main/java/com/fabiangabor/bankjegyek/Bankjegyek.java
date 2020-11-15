@@ -24,7 +24,6 @@ public class Bankjegyek {
     public final void initializeGui() {
         // alap ablak
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
-        JToolBar tools = new JToolBar();
 
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
         bankjegyPanel = new JPanel(new GridLayout(0, 6));
@@ -35,8 +34,9 @@ public class Bankjegyek {
         for (int i = 0; i < squares.length; i++) {
             for (int j = 0; j < squares[i].length; j++) {
                 JTextField textField = new JTextField();
-                textField.setName("[" + String.valueOf(i) + "," + String.valueOf(j) + "]");
-                textField.putClientProperty("id", String.valueOf(i)+String.valueOf(j));
+                textField.setName("[" + i + "," + j + "]");
+                //textField.putClientProperty("id", String.valueOf(i)+String.valueOf(j));
+                textField.putClientProperty("id", i*10+j);
                 textField.setMargin(buttonMargin);
                 textField.setHorizontalAlignment(JTextField.CENTER);
 
@@ -63,9 +63,33 @@ public class Bankjegyek {
                                     JOptionPane.ERROR_MESSAGE);
                         }
                         else {
-                            Object mProperty = textField.getClientProperty("id");
-                            util(mProperty.toString());
+                            Integer mProperty = (Integer) textField.getClientProperty("id");
 
+                            for (Component c : bankjegyPanel.getComponents()) {
+                                if (c instanceof JTextField) {
+                                    JTextField tf = ((JTextField)c);
+                                    if (tf.getClientProperty("id").equals(mProperty)) {
+                                        System.out.println(tf.getClientProperty("id"));
+                                    }
+                                    else {
+                                        tf.setEnabled(false);
+                                    }
+                                    
+                                    if ((Integer)tf.getClientProperty("id") == mProperty + 10) {
+                                        tf.setEnabled(true);
+                                    }
+                                    if ((Integer)tf.getClientProperty("id") == mProperty - 10) {
+                                        tf.setEnabled(true);
+                                    }
+                                    if ((Integer)tf.getClientProperty("id") == mProperty + 1) {
+                                        tf.setEnabled(true);
+                                    }
+                                    if ((Integer)tf.getClientProperty("id") == mProperty - 1) {
+                                        tf.setEnabled(true);
+                                    }
+                                    
+                                }
+                            }
                         }
                     }
                 });
@@ -88,17 +112,6 @@ public class Bankjegyek {
             bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
         }
     }
-
-    void util(String name) {
-        ObjectName o = null;
-        try {
-            o = ObjectName.getInstance(name);
-        } catch (MalformedObjectNameException e) {
-            //e.printStackTrace();
-        }
-        System.out.println(name + ":" + o);
-    }
-
 
     public static void main(String[] args) {
         Runnable r = () -> {
