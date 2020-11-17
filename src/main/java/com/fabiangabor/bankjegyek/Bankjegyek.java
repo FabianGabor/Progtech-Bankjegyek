@@ -35,7 +35,6 @@ public class Bankjegyek {
             for (int j = 0; j < squares[i].length; j++) {
                 JTextField textField = new JTextField();
                 textField.setName("[" + i + "," + j + "]");
-                //textField.putClientProperty("id", String.valueOf(i)+String.valueOf(j));
                 textField.putClientProperty("id", i*10+j);
                 textField.setMargin(buttonMargin);
                 textField.setHorizontalAlignment(JTextField.CENTER);
