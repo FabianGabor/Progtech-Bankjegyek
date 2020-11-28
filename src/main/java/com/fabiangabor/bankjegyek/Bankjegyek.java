@@ -204,14 +204,12 @@ public class Bankjegyek {
     }
 
     public JLabel findLabelByName(Container parent, String name) {
-        JLabel found = null;
         if (name != null) {
             for (Component child : parent.getComponents()) {
                 if (child instanceof JLabel) {
                     JLabel label = (JLabel)child;
                     if (name.equals(label.getName())) {
-                        found = label;
-                        return found;
+                        return label;
                     }
                 }
             }
