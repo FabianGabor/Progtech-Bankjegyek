@@ -91,9 +91,7 @@ public class Bankjegyek {
                         }
                         else {
                             if (countBankjegyek[inputNum-1]<3) {
-                                //Integer mProperty = (Integer) textField.getClientProperty("id");
                                 countBankjegyek[inputNum - 1]++;
-                                //System.out.println(inputNum + ": " + countBankjegyek[inputNum - 1]);
 
                                 textField.setBackground(colors[inputNum-1]);
                                 if (countBankjegyek[inputNum-1] == 3) {
