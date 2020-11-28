@@ -13,6 +13,14 @@ public class Bankjegyek {
     private JPanel bankjegyPanel;
     private final int[] countBankjegyek = new int[5];
 
+    private final Color[] colors = {
+            new Color(207,127,101),
+            new Color(217, 113, 127),
+            new Color(188, 105, 194),
+            new Color(150, 106, 217),
+            new Color(98, 113, 209)
+            };
+
     Bankjegyek() {
         initializeGui();
     }
@@ -64,11 +72,11 @@ public class Bankjegyek {
                         calculateRowColSum(textField);
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        //check();
+                        check();
                         calculateRowColSum(textField);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        //check();
+                        check();
                         calculateRowColSum(textField);
                     }
 
@@ -86,6 +94,11 @@ public class Bankjegyek {
                                 //Integer mProperty = (Integer) textField.getClientProperty("id");
                                 countBankjegyek[inputNum - 1]++;
                                 //System.out.println(inputNum + ": " + countBankjegyek[inputNum - 1]);
+
+                                textField.setBackground(colors[inputNum-1]);
+                                if (countBankjegyek[inputNum-1] == 3) {
+
+                                }
 
                                 /*
                                 for (Component c : bankjegyPanel.getComponents()) {
