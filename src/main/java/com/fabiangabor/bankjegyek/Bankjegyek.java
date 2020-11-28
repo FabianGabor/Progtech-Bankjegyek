@@ -64,18 +64,30 @@ public class Bankjegyek {
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         check();
+                        System.out.println(countRowSum(Integer.parseInt(textField.getClientProperty("id").toString())/10));
                         //System.out.println(textField.getName() + " : " + textField.getText());
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        check();
+                        //check();
                         //System.out.println(textField.getName() + " : " + textField.getText());
                     }
                     public void insertUpdate(DocumentEvent e) {
                         check();
-                        //System.out.println(textField.getName() + " : " + textField.getText());
+
+                        int sum = countRowSum(Integer.parseInt(textField.getClientProperty("id").toString())/10);
+
+                        int getId = Integer.parseInt(textField.getClientProperty("id").toString())/10 * 6 + 5;
+                        System.out.println(getId);
+
+                        String getName = String.valueOf(Integer.parseInt(textField.getClientProperty("id").toString())/10 * 10);
+
+                        findLabelByName(bankjegyPanel, getName ).setText(String.valueOf(sum));
+                        System.out.println(bankjegyPanel.getComponent( getId ));
+
                     }
 
                     public void check() {
+                        //print();
                         int inputNum = Integer.parseInt(textField.getText());
 
                         if (inputNum<1 || inputNum>5){
@@ -84,41 +96,48 @@ public class Bankjegyek {
                                     JOptionPane.ERROR_MESSAGE);
                         }
                         else {
-                            Integer mProperty = (Integer) textField.getClientProperty("id");
-                            countBankjegyek[inputNum-1]++;
-                            System.out.println(inputNum + ": " + countBankjegyek[inputNum-1]);
+                            if (countBankjegyek[inputNum-1]<3) {
+                                Integer mProperty = (Integer) textField.getClientProperty("id");
+                                countBankjegyek[inputNum - 1]++;
+                                //System.out.println(inputNum + ": " + countBankjegyek[inputNum - 1]);
 
-                            for (Component c : bankjegyPanel.getComponents()) {
-                                if (c instanceof JTextField) {
-                                    JTextField tf = ((JTextField)c);
-                                    if (tf.getClientProperty("id").equals(mProperty)) {
-                                        System.out.println(tf.getClientProperty("id"));
-                                    }
-                                    else {
-                                        tf.setEnabled(false);
-                                    }
+                                /*
+                                for (Component c : bankjegyPanel.getComponents()) {
+                                    if (c instanceof JTextField) {
+                                        JTextField tf = ((JTextField) c);
+                                        if (tf.getClientProperty("id").equals(mProperty)) {
+                                            //System.out.println(tf.getClientProperty("id"));
+                                        } else {
+                                            tf.setEnabled(false);
+                                        }
 
-                                    // ez ellenőrzi, hogy csak körülötte tudjam írni.
-                                    // igen, mert az i index az első, azaz 10-es helyen van
-                                    // konzolba is kiírom
-                                    if ((Integer)tf.getClientProperty("id") == mProperty + 10) {
-                                        tf.setEnabled(true);
+                                        // ez ellenőrzi, hogy csak körülötte tudjam írni.
+                                        // igen, mert az i index az első, azaz 10-es helyen van
+                                        // konzolba is kiírom
+                                        if ((Integer) tf.getClientProperty("id") == mProperty + 10) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty - 10) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty + 1) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty - 1) {
+                                            tf.setEnabled(true);
+                                        }
+                                        // majd akarom számolni, hogy ha 3 függőleges vagy vizszintes értéket beírok, akkor azt kezelje 1 bankjegynek
+                                        // most annyit írok, amennyit akarok. De legalább csak viz/függ irányba enged
                                     }
-                                    if ((Integer)tf.getClientProperty("id") == mProperty - 10) {
-                                        tf.setEnabled(true);
-                                    }
-                                    if ((Integer)tf.getClientProperty("id") == mProperty + 1) {
-                                        tf.setEnabled(true);
-                                    }
-                                    if ((Integer)tf.getClientProperty("id") == mProperty - 1) {
-                                        tf.setEnabled(true);
-                                    }
-                                    // majd akarom számolni, hogy ha 3 függőleges vagy vizszintes értéket beírok, akkor azt kezelje 1 bankjegynek
-                                    // most annyit írok, amennyit akarok. De legalább csak viz/függ irányba enged
                                 }
+
+                                 */
                             }
-
-
+                            else {
+                                JOptionPane.showMessageDialog(null,
+                                        "Max 3 azonos ertek!", "Hiba",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 });
@@ -134,12 +153,67 @@ public class Bankjegyek {
                 bankjegyPanel.add(squares[i][j]); // ez tárolja az 5x5 matrixot
             }
             // jobb oszlop osszegek helye
-            bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
+            JLabel sum = new JLabel("", SwingConstants.CENTER);
+            sum.putClientProperty("id", i*10);
+            sum.setName(String.valueOf(i*10));
+            bankjegyPanel.add(sum);
         }
         // also sorba az oszlopok osszege kerul
-        for (int i = 0; i < 6; i++) {
-            bankjegyPanel.add(new JLabel("", SwingConstants.CENTER));
+        for (int j = 0; j < 6; j++) {
+            JLabel sum = new JLabel("", SwingConstants.CENTER);
+            sum.setName(String.valueOf(5*10+j));
+            sum.putClientProperty("id", 5*10+j);
+            bankjegyPanel.add(sum);
         }
+    }
+
+    public void print() {
+        for (int i = 0; i < squares.length; i++) {
+            for (int j = 0; j < squares[i].length; j++) {
+                String text = squares[i][j].getText();
+                System.out.print((text.length() > 0) ? text : " ");
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println("-----------------------------------");
+    }
+
+    public Integer countRowSum(int row) {
+        Integer sum = 0;
+        Integer num;
+        Integer countNum[] = {0,0,0,0,0};
+        String squareText;
+
+        for (int j=0; j<5; j++)
+        {
+            squareText = squares[row][j].getText();
+            if (squareText.equals("")) squareText = "0"; // null kezeles
+            num = Integer.parseInt( squareText );
+            if (num > 0) { // [num - 1] kezeles
+                if (countNum[num - 1] == 0 || countNum[num - 1] == null) {
+                    countNum[num - 1]++;
+                    sum += num;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public JLabel findLabelByName(Container parent, String name) {
+        JLabel found = null;
+        if (name != null) {
+            for (Component child : parent.getComponents()) {
+                if (child instanceof JLabel) {
+                    JLabel label = (JLabel)child;
+                    if (name.equals(label.getName())) {
+                        found = label;
+                        return found;
+                    }
+                }
+            }
+        }
+        return found;
     }
 
     public static void main(String[] args) {
