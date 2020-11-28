@@ -11,10 +11,9 @@ public class Bankjegyek {
     //private final JPanel gui = new JPanel(new GridLayout(2, 1)); // működik, de félbe osztja
     private final JPanel gui = new JPanel(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-    private JTextField[][] squares = new JTextField[5][5]; // pálya mérete
+    private final JTextField[][] squares = new JTextField[5][5]; // pálya mérete
     private JPanel bankjegyPanel;
-    private JPanel controlPanel;
-    private int countBankjegyek[] = new int[5];
+    private final int[] countBankjegyek = new int[5];
 
     Bankjegyek() {
         initializeGui();
@@ -38,7 +37,7 @@ public class Bankjegyek {
         bankjegyPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
         gui.add(bankjegyPanel,c);
 
-        controlPanel = new JPanel(new GridLayout(0, 2)); //
+        JPanel controlPanel = new JPanel(new GridLayout(0, 2)); //
         controlPanel.add(new JButton("Szerkeszt"));
         controlPanel.add(new JButton("Jatek"));
 
@@ -64,26 +63,15 @@ public class Bankjegyek {
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         check();
-                        System.out.println(countRowSum(Integer.parseInt(textField.getClientProperty("id").toString())/10));
-                        //System.out.println(textField.getName() + " : " + textField.getText());
+                        calculateRowColSum(textField);
                     }
                     public void removeUpdate(DocumentEvent e) {
                         //check();
-                        //System.out.println(textField.getName() + " : " + textField.getText());
+                        calculateRowColSum(textField);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        check();
-
-                        int sum = countRowSum(Integer.parseInt(textField.getClientProperty("id").toString())/10);
-
-                        int getId = Integer.parseInt(textField.getClientProperty("id").toString())/10 * 6 + 5;
-                        System.out.println(getId);
-
-                        String getName = String.valueOf(Integer.parseInt(textField.getClientProperty("id").toString())/10 * 10);
-
-                        findLabelByName(bankjegyPanel, getName ).setText(String.valueOf(sum));
-                        System.out.println(bankjegyPanel.getComponent( getId ));
-
+                        //check();
+                        calculateRowColSum(textField);
                     }
 
                     public void check() {
@@ -97,7 +85,7 @@ public class Bankjegyek {
                         }
                         else {
                             if (countBankjegyek[inputNum-1]<3) {
-                                Integer mProperty = (Integer) textField.getClientProperty("id");
+                                //Integer mProperty = (Integer) textField.getClientProperty("id");
                                 countBankjegyek[inputNum - 1]++;
                                 //System.out.println(inputNum + ": " + countBankjegyek[inputNum - 1]);
 
@@ -161,16 +149,16 @@ public class Bankjegyek {
         // also sorba az oszlopok osszege kerul
         for (int j = 0; j < 6; j++) {
             JLabel sum = new JLabel("", SwingConstants.CENTER);
-            sum.setName(String.valueOf(5*10+j));
-            sum.putClientProperty("id", 5*10+j);
+            sum.setName(String.valueOf(50+j));
+            sum.putClientProperty("id", 50+j);
             bankjegyPanel.add(sum);
         }
     }
 
     public void print() {
-        for (int i = 0; i < squares.length; i++) {
-            for (int j = 0; j < squares[i].length; j++) {
-                String text = squares[i][j].getText();
+        for (JTextField[] square : squares) {
+            for (JTextField jTextField : square) {
+                String text = jTextField.getText();
                 System.out.print((text.length() > 0) ? text : " ");
                 System.out.print(" ");
             }
@@ -179,15 +167,30 @@ public class Bankjegyek {
         System.out.println("-----------------------------------");
     }
 
-    public Integer countRowSum(int row) {
-        Integer sum = 0;
-        Integer num;
-        Integer countNum[] = {0,0,0,0,0};
+    public void calculateRowColSum(JTextField textField) {
+        int row = Integer.parseInt(textField.getClientProperty("id").toString())/10;
+        int rowSum = Sum(row, false);
+        String getName = String.valueOf(row * 10);
+        findLabelByName(bankjegyPanel, getName ).setText(String.valueOf(rowSum));
+
+        int col = Integer.parseInt(textField.getClientProperty("id").toString())%10;
+        int colSum = Sum(col, true);
+        getName = String.valueOf(col + 50);
+        findLabelByName(bankjegyPanel, getName ).setText(String.valueOf(colSum));
+    }
+
+    public Integer Sum(int index, boolean vertical) {
+        int sum = 0;
+        int num;
+        Integer[] countNum = {0,0,0,0,0};
         String squareText;
 
-        for (int j=0; j<5; j++)
+        for (int i=0; i<5; i++)
         {
-            squareText = squares[row][j].getText();
+            if (vertical)
+                squareText = squares[i][index].getText();
+            else
+                squareText = squares[index][i].getText();
             if (squareText.equals("")) squareText = "0"; // null kezeles
             num = Integer.parseInt( squareText );
             if (num > 0) { // [num - 1] kezeles
@@ -213,7 +216,7 @@ public class Bankjegyek {
                 }
             }
         }
-        return found;
+        return null;
     }
 
     public static void main(String[] args) {
