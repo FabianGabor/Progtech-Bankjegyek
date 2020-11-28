@@ -7,8 +7,6 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class Bankjegyek {
-    //private final JPanel gui = new JPanel(new BorderLayout(25, 25));
-    //private final JPanel gui = new JPanel(new GridLayout(2, 1)); // működik, de félbe osztja
     private final JPanel gui = new JPanel(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     private final JTextField[][] squares = new JTextField[5][5]; // pálya mérete
