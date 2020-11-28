@@ -29,4 +29,6 @@ public class BankjegyekGUI {
     private JButton button22;
     private JButton button23;
     private JTextField a2TextField;
+    private JButton EDITButton;
+    private JPanel controlPanel;
 }
