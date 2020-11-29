@@ -11,11 +11,12 @@ public class Bankjegyek {
     private final JPanel gui = new JPanel(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     private JTabbedPane tabbedPane;
+    private JPanel editorPanel;
     private JPanel gamePanel;
 
     private final JTextField[][] squares = new JTextField[5][5]; // pálya mérete
     private final JTextField[][] squaresPlay = new JTextField[5][5]; // pálya mérete
-    private JPanel bankjegyPanel;
+
     private final int[] countBankjegyek = new int[5];
     private final int[] countBankjegyekPlay = new int[5];
 
@@ -38,15 +39,15 @@ public class Bankjegyek {
         c.gridy = 1;
 
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
-        bankjegyPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
-        bankjegyPanel.setName("Editor");
+        editorPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
+        editorPanel.setName("Editor");
         //gui.add(bankjegyPanel,c);
 
         gamePanel = new JPanel(new GridLayout(0, 6));
         gamePanel.setName("Play");
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.add(bankjegyPanel);
+        tabbedPane.add(editorPanel);
         tabbedPane.add(gamePanel);
         gui.add(tabbedPane, c);
 
@@ -72,15 +73,15 @@ public class Bankjegyek {
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(bankjegyPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, textField, true);
                     }
                     public void removeUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(bankjegyPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, textField, true);
                     }
                     public void insertUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(bankjegyPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, textField, true);
                     }
                 });
 
@@ -108,14 +109,14 @@ public class Bankjegyek {
         // az utolso oszlopba a sorok osszegenek fenntartott JLabel kerul
         for (int i = 0; i < squares.length; i++) {
             for (int j = 0; j < squares.length; j++) {
-                bankjegyPanel.add(squares[i][j]); // ez tárolja az 5x5 matrixot
+                editorPanel.add(squares[i][j]); // ez tárolja az 5x5 matrixot
                 gamePanel.add(squaresPlay[i][j]);
             }
             // jobb oszlop osszegek helye
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.putClientProperty("id", i*10);
             sum.setName(String.valueOf(i*10));
-            bankjegyPanel.add(sum);
+            editorPanel.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             sumPlay.putClientProperty("id-play", i*10*10);
@@ -127,7 +128,7 @@ public class Bankjegyek {
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.setName(String.valueOf(50+j));
             sum.putClientProperty("id", 50+j);
-            bankjegyPanel.add(sum);
+            editorPanel.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             sumPlay.setName(String.valueOf((50+j)*10));

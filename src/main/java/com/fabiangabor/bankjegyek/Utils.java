@@ -19,8 +19,7 @@ public class Utils {
         Integer[] countNum = {0,0,0,0,0};
         String squareText;
 
-        for (int i=0; i<5; i++)
-        {
+        for (int i=0; i<5; i++) {
             if (vertical)
                 squareText = squares[i][index].getText();
             else
