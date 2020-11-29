@@ -17,6 +17,11 @@ public class Bankjegyek {
     private final JTextField[][] squares = new JTextField[5][5]; // pálya mérete
     private final JTextField[][] squaresPlay = new JTextField[5][5]; // pálya mérete
 
+    private final int[] editorRowSums = new int[5];
+    private final int[] editorColSums = new int[5];
+    private final int[] playRowSums = new int[5];
+    private final int[] playColSums = new int[5];
+    
     private final int[] countBankjegyek = new int[5];
     private final int[] countBankjegyekPlay = new int[5];
 
@@ -41,7 +46,6 @@ public class Bankjegyek {
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
         editorPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
         editorPanel.setName("Editor");
-        //gui.add(bankjegyPanel,c);
 
         gamePanel = new JPanel(new GridLayout(0, 6));
         gamePanel.setName("Play");
@@ -73,30 +77,30 @@ public class Bankjegyek {
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                     public void removeUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                     public void insertUpdate(DocumentEvent e) {
                         check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, textField, true);
+                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                 });
 
                 textFieldPlay.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         check(textFieldPlay, countBankjegyekPlay);
-                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
+                        calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                     public void removeUpdate(DocumentEvent e) {
                         check(textFieldPlay, countBankjegyekPlay);
-                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
+                        calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                     public void insertUpdate(DocumentEvent e) {
                         check(textFieldPlay, countBankjegyekPlay);
-                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
+                        calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                 });
 

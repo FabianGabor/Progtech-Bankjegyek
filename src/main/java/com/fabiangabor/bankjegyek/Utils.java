@@ -36,7 +36,7 @@ public class Utils {
         return sum;
     }
 
-    public static void calculateRowColSum(JPanel jPanel, JTextField[][] squares, JTextField textField, boolean editor) {
+    public static void calculateRowColSum(JPanel jPanel, JTextField[][] squares, int rowSums[], int colSums[], JTextField textField, boolean editor) {
         String id = (editor) ? "id" : "id-play";
 
         int row = (editor) ? Integer.parseInt(textField.getClientProperty(id).toString())/10 : Integer.parseInt(textField.getClientProperty(id).toString())/10;
