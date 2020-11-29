@@ -4,6 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Utils {
+
+    private static final Color[] colors = {
+            new Color(236,190,250),
+            new Color(189, 169, 222),
+            new Color(184, 184, 245),
+            new Color(166, 187, 222),
+            new Color(191, 218, 205)
+    };
+
     public static Integer Sum(JTextField[][] squares, int index, boolean vertical) {
         int sum = 0;
         int num;
@@ -54,5 +63,75 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static void check(JTextField jTextField, int[] countBankjegyek) {
+        int inputNum = Integer.parseInt(jTextField.getText());
+
+        if (inputNum<1 || inputNum>5){
+            JOptionPane.showMessageDialog(null,
+                    "Hiba: 1-5 közötti érték kell!", "Hiba",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            if (countBankjegyek[inputNum-1]<3) {
+                countBankjegyek[inputNum - 1]++;
+
+                jTextField.setBackground(colors[inputNum-1]);
+                /*
+                if (countBankjegyekPlay[inputNum-1] == 3) {
+                }
+                 */
+
+                 /*
+                                for (Component c : bankjegyPanel.getComponents()) {
+                                    if (c instanceof JTextField) {
+                                        JTextField tf = ((JTextField) c);
+                                        if (tf.getClientProperty("id").equals(mProperty)) {
+                                            //System.out.println(tf.getClientProperty("id"));
+                                        } else {
+                                            tf.setEnabled(false);
+                                        }
+
+                                        // ez ellenőrzi, hogy csak körülötte tudjam írni.
+                                        // igen, mert az i index az első, azaz 10-es helyen van
+                                        // konzolba is kiírom
+                                        if ((Integer) tf.getClientProperty("id") == mProperty + 10) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty - 10) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty + 1) {
+                                            tf.setEnabled(true);
+                                        }
+                                        if ((Integer) tf.getClientProperty("id") == mProperty - 1) {
+                                            tf.setEnabled(true);
+                                        }
+                                        // majd akarom számolni, hogy ha 3 függőleges vagy vizszintes értéket beírok, akkor azt kezelje 1 bankjegynek
+                                        // most annyit írok, amennyit akarok. De legalább csak viz/függ irányba enged
+                                    }
+                                }
+
+                                 */
+            }
+            else {
+                JOptionPane.showMessageDialog(null,
+                        "Max 3 azonos ertek!", "Hiba",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public static void print(JTextField[][] squares) {
+        for (JTextField[] square : squares) {
+            for (JTextField jTextField : square) {
+                String text = jTextField.getText();
+                System.out.print((text.length() > 0) ? text : " ");
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println("-----------------------------------");
     }
 }

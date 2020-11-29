@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import com.fabiangabor.bankjegyek.Utils;
+import static com.fabiangabor.bankjegyek.Utils.*;
 
 public class Bankjegyek {
     private final JPanel gui = new JPanel(new GridBagLayout());
@@ -18,14 +18,6 @@ public class Bankjegyek {
     private JPanel bankjegyPanel;
     private final int[] countBankjegyek = new int[5];
     private final int[] countBankjegyekPlay = new int[5];
-
-    private final Color[] colors = {
-            new Color(236,190,250),
-            new Color(189, 169, 222),
-            new Color(184, 184, 245),
-            new Color(166, 187, 222),
-            new Color(191, 218, 205)
-            };
 
     Bankjegyek() {
         initializeGui();
@@ -79,114 +71,31 @@ public class Bankjegyek {
 
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(bankjegyPanel, squares, textField, true);
+                        check(textField, countBankjegyek);
+                        calculateRowColSum(bankjegyPanel, squares, textField, true);
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(bankjegyPanel, squares, textField, true);
+                        check(textField, countBankjegyek);
+                        calculateRowColSum(bankjegyPanel, squares, textField, true);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(bankjegyPanel, squares, textField, true);
-                    }
-
-                    public void check() {
-                        //print();
-                        int inputNum = Integer.parseInt(textField.getText());
-
-                        if (inputNum<1 || inputNum>5){
-                            JOptionPane.showMessageDialog(null,
-                                    "Hiba: 1-5 közötti érték kell!", "Hiba",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                        else {
-                            if (countBankjegyek[inputNum-1]<3) {
-                                countBankjegyek[inputNum - 1]++;
-
-                                textField.setBackground(colors[inputNum-1]);
-                                if (countBankjegyek[inputNum-1] == 3) {
-
-                                }
-
-                                /*
-                                for (Component c : bankjegyPanel.getComponents()) {
-                                    if (c instanceof JTextField) {
-                                        JTextField tf = ((JTextField) c);
-                                        if (tf.getClientProperty("id").equals(mProperty)) {
-                                            //System.out.println(tf.getClientProperty("id"));
-                                        } else {
-                                            tf.setEnabled(false);
-                                        }
-
-                                        // ez ellenőrzi, hogy csak körülötte tudjam írni.
-                                        // igen, mert az i index az első, azaz 10-es helyen van
-                                        // konzolba is kiírom
-                                        if ((Integer) tf.getClientProperty("id") == mProperty + 10) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty - 10) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty + 1) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty - 1) {
-                                            tf.setEnabled(true);
-                                        }
-                                        // majd akarom számolni, hogy ha 3 függőleges vagy vizszintes értéket beírok, akkor azt kezelje 1 bankjegynek
-                                        // most annyit írok, amennyit akarok. De legalább csak viz/függ irányba enged
-                                    }
-                                }
-
-                                 */
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(null,
-                                        "Max 3 azonos ertek!", "Hiba",
-                                        JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
+                        check(textField, countBankjegyek);
+                        calculateRowColSum(bankjegyPanel, squares, textField, true);
                     }
                 });
 
                 textFieldPlay.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
+                        check(textFieldPlay, countBankjegyekPlay);
+                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
+                        check(textFieldPlay, countBankjegyekPlay);
+                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        check();
-                        Utils.calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
-                    }
-
-                    public void check() {
-                        int inputNum = Integer.parseInt(textFieldPlay.getText());
-
-                        if (inputNum<1 || inputNum>5){
-                            JOptionPane.showMessageDialog(null,
-                                    "Hiba: 1-5 közötti érték kell!", "Hiba",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                        else {
-                            if (countBankjegyekPlay[inputNum-1]<3) {
-                                countBankjegyekPlay[inputNum - 1]++;
-
-                                textFieldPlay.setBackground(colors[inputNum-1]);
-                                if (countBankjegyekPlay[inputNum-1] == 3) {
-
-                                }
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(null,
-                                        "Max 3 azonos ertek!", "Hiba",
-                                        JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
+                        check(textFieldPlay, countBankjegyekPlay);
+                        calculateRowColSum(gamePanel, squaresPlay, textFieldPlay, false);
                     }
                 });
 
@@ -226,24 +135,6 @@ public class Bankjegyek {
             gamePanel.add(sumPlay);
         }
     }
-
-    public void print() {
-        for (JTextField[] square : squares) {
-            for (JTextField jTextField : square) {
-                String text = jTextField.getText();
-                System.out.print((text.length() > 0) ? text : " ");
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        System.out.println("-----------------------------------");
-    }
-
-
-
-
-
-
 
     public static void main(String[] args) {
         Runnable r = () -> {
