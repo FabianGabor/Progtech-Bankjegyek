@@ -10,8 +10,6 @@ import static com.fabiangabor.bankjegyek.Utils.*;
 public class Bankjegyek {
     private final JPanel gui = new JPanel(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-    private JTabbedPane tabbedPane;
-    private JPanel editorPanel;
     private JPanel gamePanel;
 
     private final JTextField[][] squares = new JTextField[5][5]; // pálya mérete
@@ -44,13 +42,13 @@ public class Bankjegyek {
         c.gridy = 1;
 
         // 6x6 panel (5x5 tabla + 1 oszlop + 1 sor)
-        editorPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
+        JPanel editorPanel = new JPanel(new GridLayout(0, 6)); // 5 oszlop + 1 az összegnek majd a pályán kivül.
         editorPanel.setName("Editor");
 
         gamePanel = new JPanel(new GridLayout(0, 6));
         gamePanel.setName("Play");
 
-        tabbedPane = new JTabbedPane();
+        JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add(editorPanel);
         tabbedPane.add(gamePanel);
         gui.add(tabbedPane, c);
@@ -71,35 +69,36 @@ public class Bankjegyek {
                 textFieldPlay.setHorizontalAlignment(JTextField.CENTER);
 
                 textField.setBackground(Color.WHITE);
-                textField.setForeground(Color.white);
                 textFieldPlay.setBackground(Color.WHITE);
 
                 textField.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
-                        check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
+                        //System.out.println("changedUpdate: " + e);
+                        check(textField, countBankjegyek, squares);
+                        //calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
+                        check(textField, countBankjegyek, squares);
+                        //calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        check(textField, countBankjegyek);
-                        calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
+                        //System.out.println("insertUpdate: " + e);
+                        check(textField, countBankjegyek, squares);
+                        //calculateRowColSum(editorPanel, squares, editorRowSums, editorColSums, textField, true);
                     }
                 });
 
                 textFieldPlay.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
-                        check(textFieldPlay, countBankjegyekPlay);
+                        check(textFieldPlay, countBankjegyekPlay, squaresPlay);
                         calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                     public void removeUpdate(DocumentEvent e) {
-                        check(textFieldPlay, countBankjegyekPlay);
+                        check(textFieldPlay, countBankjegyekPlay, squaresPlay);
                         calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                     public void insertUpdate(DocumentEvent e) {
-                        check(textFieldPlay, countBankjegyekPlay);
+                        check(textFieldPlay, countBankjegyekPlay, squaresPlay);
                         calculateRowColSum(gamePanel, squaresPlay, playRowSums, playColSums, textFieldPlay, false);
                     }
                 });
