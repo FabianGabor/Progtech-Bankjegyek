@@ -64,62 +64,48 @@ public class Utils {
         return null;
     }
 
-    public static void check(JTextField jTextField, int[] countBankjegyek) {
-        int inputNum = Integer.parseInt(jTextField.getText());
+    public static void check(JTextField jTextField, int[] countBankjegyek, JTextField[][] squares) {
+        int inputNum;
+        try {
+            inputNum = Integer.parseInt(jTextField.getText());
 
-        if (inputNum<1 || inputNum>5){
-            JOptionPane.showMessageDialog(null,
-                    "Hiba: 1-5 közötti érték kell!", "Hiba",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        else {
-            if (countBankjegyek[inputNum-1]<3) {
-                countBankjegyek[inputNum - 1]++;
-
+            if (inputNum > 0 && inputNum < 6)
                 jTextField.setBackground(colors[inputNum-1]);
-                /*
-                if (countBankjegyekPlay[inputNum-1] == 3) {
-                }
-                 */
 
-                 /*
-                                for (Component c : bankjegyPanel.getComponents()) {
-                                    if (c instanceof JTextField) {
-                                        JTextField tf = ((JTextField) c);
-                                        if (tf.getClientProperty("id").equals(mProperty)) {
-                                            //System.out.println(tf.getClientProperty("id"));
-                                        } else {
-                                            tf.setEnabled(false);
-                                        }
-
-                                        // ez ellenőrzi, hogy csak körülötte tudjam írni.
-                                        // igen, mert az i index az első, azaz 10-es helyen van
-                                        // konzolba is kiírom
-                                        if ((Integer) tf.getClientProperty("id") == mProperty + 10) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty - 10) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty + 1) {
-                                            tf.setEnabled(true);
-                                        }
-                                        if ((Integer) tf.getClientProperty("id") == mProperty - 1) {
-                                            tf.setEnabled(true);
-                                        }
-                                        // majd akarom számolni, hogy ha 3 függőleges vagy vizszintes értéket beírok, akkor azt kezelje 1 bankjegynek
-                                        // most annyit írok, amennyit akarok. De legalább csak viz/függ irányba enged
-                                    }
-                                }
-
-                                 */
-            }
-            else {
+            /*
+            if (inputNum<1 || inputNum>5){
                 JOptionPane.showMessageDialog(null,
-                        "Max 3 azonos ertek!", "Hiba",
+                        "Hiba: 1-5 közötti érték kell!", "Hiba",
                         JOptionPane.ERROR_MESSAGE);
             }
+
+            else {
+                if (countBankjegyek[inputNum-1]<3) {
+                    countBankjegyek[inputNum - 1]++;
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,
+                            "Max 3 azonos ertek!", "Hiba",
+                            JOptionPane.ERROR_MESSAGE);
+                    //jTextField.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    //System.out.println(jTextField.getText());
+                }
+            }
+             */
         }
+        catch (NumberFormatException numberFormatException) {
+            System.out.println(numberFormatException);
+            inputNum = 0;
+            // jTextField koordinataja kell, ott kell csokkenteni 1-gyel a szamjegy mennyiseget a count-ban
+
+            int row = Integer.parseInt(jTextField.getClientProperty("id").toString())/10;
+            int col = Integer.parseInt(jTextField.getClientProperty("id").toString())%10;
+
+            System.out.println("[" + row + "][" + col + "] = " + squares[row][col].getText() + jTextField.getText());
+        }
+
+        System.out.println(inputNum);
     }
 
     public static void print(JTextField[][] squares) {
