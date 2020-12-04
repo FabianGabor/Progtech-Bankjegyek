@@ -3,6 +3,8 @@ package com.fabiangabor.bankjegyek;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI {
     private final JPanel gui = new JPanel(new GridBagLayout());
@@ -145,5 +147,19 @@ public class GUI {
 
         controlEditor.add(checkEditor);
         controlPlay.add(checkPlay);
+
+        checkEditor.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                Utils utils = new Utils();
+                if (utils.checkEditor(squares)) {
+                    JOptionPane.showMessageDialog(gui, "Minden rendben!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(gui, "Baj van!");
+                }
+            }
+        });
     }
 }
