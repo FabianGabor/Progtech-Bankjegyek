@@ -114,21 +114,23 @@ public class GUI {
             }
             // jobb oszlop osszegek helye
             JLabel sum = new JLabel("", SwingConstants.CENTER);
-            sum.putClientProperty("id", i*10);
-            sum.setName(String.valueOf(i*10));
+            sum.setForeground(Color.white);
+            //sum.putClientProperty("sumRow", i);
+            sum.setName("sumRow" + "" + i + "");
             mapEditor.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
-            sumPlay.putClientProperty("id-play", i*10*10);
+            //sumPlay.putClientProperty("id-play", i*10*10);
             sumPlay.setName(String.valueOf(i*10*10));
             mapPlay.add(sumPlay);
         }
         // also sorba az oszlopok osszege kerul
         for (int j = 0; j < size+1; j++) {
             JLabel sum = new JLabel("", SwingConstants.CENTER);
-            sum.setName(String.valueOf(50+j));
-            sum.putClientProperty("id", 50+j);
-            mapEditor.add(sum);
+            sum.setForeground(Color.white);
+            sum.setName("sumCol" + "" + j + "");
+            //sum.putClientProperty("sumCol", 50+j);
+            mapEditor.add(sum);            
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             sumPlay.setName(String.valueOf((50+j)*10));
@@ -154,7 +156,8 @@ public class GUI {
             {
                 Utils utils = new Utils();
                 if (utils.checkEditor(squares)) {
-                    JOptionPane.showMessageDialog(gui, "Minden rendben!");
+                    //JOptionPane.showMessageDialog(gui, "Minden rendben!");
+                    utils.buildMap(mapEditor);
                 }
                 else {
                     JOptionPane.showMessageDialog(gui, "Baj van!");
