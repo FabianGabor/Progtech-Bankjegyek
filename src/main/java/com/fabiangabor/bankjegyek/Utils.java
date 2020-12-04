@@ -6,13 +6,13 @@ import java.awt.*;
 public class Utils {
 
     private static final Color[] colors = {
-            new Color(236,190,250),
-            new Color(189, 169, 222),
-            new Color(184, 184, 245),
-            new Color(166, 187, 222),
-            new Color(191, 218, 205)
+            Colors.pink,
+            Colors.purple,
+            Colors.blue,
+            Colors.teal,
+            Colors.green
     };
-
+    
     public static Integer Sum(JTextField[][] squares, int index, boolean vertical) {
         int sum = 0;
         int num;
