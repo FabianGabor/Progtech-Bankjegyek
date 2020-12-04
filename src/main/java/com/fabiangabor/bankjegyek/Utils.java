@@ -36,7 +36,7 @@ public class Utils {
         return sum;
     }
 
-    public static void calculateRowColSum(JPanel jPanel, JTextField[][] squares, int rowSums[], int colSums[], JTextField textField, boolean editor) {
+    public static void calculateRowColSum(JPanel jPanel, JTextField[][] squares, int[] rowSums, int[] colSums, JTextField textField, boolean editor) {
         String id = (editor) ? "id" : "id-play";
 
         int row = (editor) ? Integer.parseInt(textField.getClientProperty(id).toString())/10 : Integer.parseInt(textField.getClientProperty(id).toString())/10;
@@ -71,31 +71,8 @@ public class Utils {
 
             if (inputNum > 0 && inputNum < 6)
                 jTextField.setBackground(colors[inputNum-1]);
-
-            /*
-            if (inputNum<1 || inputNum>5){
-                JOptionPane.showMessageDialog(null,
-                        "Hiba: 1-5 közötti érték kell!", "Hiba",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
-            else {
-                if (countBankjegyek[inputNum-1]<3) {
-                    countBankjegyek[inputNum - 1]++;
-
-                }
-                else {
-                    JOptionPane.showMessageDialog(null,
-                            "Max 3 azonos ertek!", "Hiba",
-                            JOptionPane.ERROR_MESSAGE);
-                    //jTextField.setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                    //System.out.println(jTextField.getText());
-                }
-            }
-             */
         }
         catch (NumberFormatException numberFormatException) {
-            System.out.println(numberFormatException);
             inputNum = 0;
             // jTextField koordinataja kell, ott kell csokkenteni 1-gyel a szamjegy mennyiseget a count-ban
 
