@@ -43,6 +43,10 @@ public class Utils {
         setEditorSquares(tmp);
     }
 
+    public boolean collinear(Coordinates.Coord c1, Coordinates.Coord c2, Coordinates.Coord c3) {
+        return (c1.y - c2.y) * (c1.x - c3.x) == (c1.y - c3.y) * (c1.x - c2.x);
+    }
+
     public boolean checkEditor(JTextField[][] squares) {
         convertJTextFieldToInt(squares);
 
@@ -75,6 +79,20 @@ public class Utils {
             }
         }
 
+        // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
+        for (int i=0; i<map.size(); i++) {
+            System.out.println(map.entrySet());
+            for (Map.Entry<Integer, ArrayList<Coordinates.Coord>> entry : map.entrySet()) {
+                // nem alkotnak háromszöget, azaz egy vonalon vannak, de lehetnek átlósak
+                if (!collinear(entry.getValue().get(0), entry.getValue().get(1), entry.getValue().get(2))) return false;
+
+                // így biztosan csak függőlegese vagy vízszintesen vannak egy vonalban
+                if (!((entry.getValue().get(0).x==entry.getValue().get(1).x) && (entry.getValue().get(0).x == entry.getValue().get(2).x) ||
+                        (entry.getValue().get(0).y==entry.getValue().get(1).y) && (entry.getValue().get(0).y == entry.getValue().get(2).y))) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }
