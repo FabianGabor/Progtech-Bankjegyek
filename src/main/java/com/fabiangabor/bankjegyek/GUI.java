@@ -39,17 +39,41 @@ public class GUI {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipadx = (size+1) * 48;
         c.ipady = (size+1) * 48;
-        c.weightx = 0.75;
-        c.weighty = 0.75;
-        c.gridx = 0;
+        c.weightx = 1;
+        c.weighty = 0.9;
         c.gridy = 0;
 
         // (size+1)x(size+1) panel ( (size+1)x(size+1) tabla + 1 oszlop + 1 sor )
-        JPanel editorPanel = new JPanel(new GridLayout(0, size+1)); // (size) oszlop + 1 az összegnek majd a pályán kivül.
-        editorPanel.setName("Editor");
+        JPanel mapEditor = new JPanel(new GridLayout(size+1,size+1)); // (size) oszlop + 1 az összegnek majd a pályán kivül.
+        JPanel mapPlay = new JPanel(new GridLayout(size+1, size+1));
+        mapEditor.setBackground(Colors.darkGray);
+        mapPlay.setBackground(Colors.darkGray);
 
-        JPanel gamePanel = new JPanel(new GridLayout(0, size+1));
+        JPanel editorPanel = new JPanel(new GridBagLayout());
+        JPanel gamePanel = new JPanel(new GridBagLayout());
+        editorPanel.setName("Editor");
+        editorPanel.setBackground(Color.red);
         gamePanel.setName("Play");
+        gamePanel.setBackground(Color.red);
+
+        JPanel controlEditor = new JPanel();
+        JPanel controlPlay = new JPanel();
+        controlEditor.setName("Control");
+        controlEditor.setBackground(Colors.darkGray);
+        controlPlay.setName("Control");
+        controlPlay.setBackground(Colors.darkGray);
+
+        editorPanel.add(mapEditor, c);
+        gamePanel.add(mapPlay, c);
+
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridy = 1;
+
+        editorPanel.add(controlEditor, c);
+        gamePanel.add(controlPlay, c);
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add(editorPanel);
@@ -83,31 +107,43 @@ public class GUI {
         // az utolso oszlopba a sorok osszegenek fenntartott JLabel kerul
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                editorPanel.add(squares[i][j]); // ez tárolja az 5x5 matrixot
-                gamePanel.add(squaresPlay[i][j]);
+                mapEditor.add(squares[i][j]); // ez tárolja az 5x5 matrixot
+                mapPlay.add(squaresPlay[i][j]);
             }
             // jobb oszlop osszegek helye
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.putClientProperty("id", i*10);
             sum.setName(String.valueOf(i*10));
-            editorPanel.add(sum);
+            mapEditor.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             sumPlay.putClientProperty("id-play", i*10*10);
             sumPlay.setName(String.valueOf(i*10*10));
-            gamePanel.add(sumPlay);
+            mapPlay.add(sumPlay);
         }
         // also sorba az oszlopok osszege kerul
         for (int j = 0; j < size+1; j++) {
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.setName(String.valueOf(50+j));
             sum.putClientProperty("id", 50+j);
-            editorPanel.add(sum);
+            mapEditor.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             sumPlay.setName(String.valueOf((50+j)*10));
             sumPlay.putClientProperty("id-play", (50+j)*10);
-            gamePanel.add(sumPlay);
+            mapPlay.add(sumPlay);
         }
+
+        JButton checkEditor = new JButton("Check");
+        JButton checkPlay = new JButton("Finish");
+
+        checkEditor.setBackground(Colors.darkGray);
+        checkPlay.setBackground(Colors.darkGray);
+
+        checkEditor.setForeground(Color.white);
+        checkPlay.setForeground(Color.white);
+
+        controlEditor.add(checkEditor);
+        controlPlay.add(checkPlay);
     }
 }
