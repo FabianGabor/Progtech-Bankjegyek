@@ -9,4 +9,12 @@ public class Colors {
     public static Color blue = new Color(184, 184, 245);
     public static Color teal = new Color(166, 187, 222);
     public static Color green = new Color(191, 218, 205);
+
+    public static final Color[] colors = {
+            pink,
+            purple,
+            blue,
+            teal,
+            green
+    };
 }
