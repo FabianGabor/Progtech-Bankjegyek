@@ -80,22 +80,23 @@ public class GUI {
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                JTextField textField = new JTextField();
+                JTextField textFieldEditor = new JTextField();
                 JTextField textFieldPlay = new JTextField();
-                textField.setName("[" + i + "," + j + "]");
+                textFieldEditor.setName("[" + i + "," + j + "]");
                 textFieldPlay.setName("[" + i + "," + j + "]-play");
-                textField.putClientProperty("id", i*10+j); // id a sor és oszlopindexből lesz.
+                textFieldEditor.putClientProperty("id", i*10+j); // id a sor és oszlopindexből lesz.
                 textFieldPlay.putClientProperty("id-play", i*10+j); // id a sor és oszlopindexből lesz.
-                textField.setMargin(buttonMargin);
+                textFieldEditor.setMargin(buttonMargin);
                 textFieldPlay.setMargin(buttonMargin);
-                textField.setHorizontalAlignment(JTextField.CENTER);
+                textFieldEditor.setHorizontalAlignment(JTextField.CENTER);
                 textFieldPlay.setHorizontalAlignment(JTextField.CENTER);
 
-                textField.setBackground(Color.WHITE);
+                textFieldEditor.setBackground(Color.WHITE);
                 textFieldPlay.setBackground(Color.WHITE);
 
-                squaresEditor[i][j] = textField;
+                squaresEditor[i][j] = textFieldEditor;
                 squaresPlay[i][j] = textFieldPlay;
+
                 Colors colors = new Colors();
                 textFieldEditor.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
                     try {
@@ -159,7 +160,6 @@ public class GUI {
 
         controlEditor.add(checkEditorBtn);
         controlPlay.add(checkPlayBtn);
-
 
         Utils utils = new Utils();
         checkEditorBtn.addActionListener(e -> {
