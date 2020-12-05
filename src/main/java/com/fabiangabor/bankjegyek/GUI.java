@@ -26,10 +26,6 @@ public class GUI {
         SwingUtilities.invokeLater(r);
     }
 
-    public JPanel getGui() {
-        return gui;
-    }
-
     public final void initializeGui(int size) {
         final JTextField[][] squares = new JTextField[size][size]; // pálya mérete
         final JTextField[][] squaresPlay = new JTextField[size][size]; // pálya mérete
