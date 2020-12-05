@@ -3,8 +3,6 @@ package com.fabiangabor.bankjegyek;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUI {
     private final JPanel gui = new JPanel(new GridBagLayout());
@@ -121,7 +119,7 @@ public class GUI {
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
             //sumPlay.putClientProperty("id-play", i*10*10);
-            sumPlay.setName(String.valueOf(i*10*10));
+            sumPlay.setName("sumRow" + "" + i + "");
             mapPlay.add(sumPlay);
         }
         // also sorba az oszlopok osszege kerul
@@ -129,12 +127,10 @@ public class GUI {
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.setForeground(Color.white);
             sum.setName("sumCol" + "" + j + "");
-            //sum.putClientProperty("sumCol", 50+j);
             mapEditor.add(sum);            
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
-            sumPlay.setName(String.valueOf((50+j)*10));
-            sumPlay.putClientProperty("id-play", (50+j)*10);
+            sumPlay.setName("sumCol" + "" + j + "");
             mapPlay.add(sumPlay);
         }
 
@@ -150,18 +146,14 @@ public class GUI {
         controlEditor.add(checkEditor);
         controlPlay.add(checkPlay);
 
-        checkEditor.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                Utils utils = new Utils();
-                if (utils.checkEditor(squares)) {
-                    //JOptionPane.showMessageDialog(gui, "Minden rendben!");
-                    utils.buildMap(mapEditor);
-                }
-                else {
-                    JOptionPane.showMessageDialog(gui, "Baj van!");
-                }
+        checkEditor.addActionListener(e -> {
+            Utils utils = new Utils();
+            if (utils.checkEditor(squares)) {
+                //JOptionPane.showMessageDialog(gui, "Minden rendben!");
+                utils.buildMap(mapEditor);
+            }
+            else {
+                JOptionPane.showMessageDialog(gui, "Baj van!");
             }
         });
     }
