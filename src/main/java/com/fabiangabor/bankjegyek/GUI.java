@@ -130,19 +130,19 @@ public class GUI {
             mapPlay.add(sumPlay);
         }
 
-        JButton checkEditor = new JButton("Check");
-        JButton checkPlay = new JButton("Finish");
+        JButton checkEditorBtn = new JButton("Check");
+        JButton checkPlayBtn = new JButton("Finish");
 
-        checkEditor.setBackground(Colors.darkGray);
-        checkPlay.setBackground(Colors.darkGray);
+        checkEditorBtn.setBackground(Colors.darkGray);
+        checkPlayBtn.setBackground(Colors.darkGray);
 
-        checkEditor.setForeground(Color.white);
-        checkPlay.setForeground(Color.white);
+        checkEditorBtn.setForeground(Color.white);
+        checkPlayBtn.setForeground(Color.white);
 
-        controlEditor.add(checkEditor);
-        controlPlay.add(checkPlay);
+        controlEditor.add(checkEditorBtn);
+        controlPlay.add(checkPlayBtn);
 
-        checkEditor.addActionListener(e -> {
+        checkEditorBtn.addActionListener(e -> {
             Utils utils = new Utils();
             if (utils.checkEditor(squares)) {
                 //JOptionPane.showMessageDialog(gui, "Minden rendben!");
