@@ -124,7 +124,7 @@ public class Utils {
 
     public boolean checkRowColSums(Data data) {
         int[] rowSums = calculateSumRows(data.getSquares());
-        int[] colSums = calculateSumCols(data.getSquares());        
+        int[] colSums = calculateSumCols(data.getSquares());
 
         if (!Arrays.equals(rowSums, data.getSumRows())) return false;
         if (!Arrays.equals(colSums, data.getSumCols())) return false;
@@ -205,28 +205,4 @@ public class Utils {
     public Component getComponentByName(HashMap<String, Component> componentMap, String name) {
         return componentMap.getOrDefault(name, null);
     }
-
-    /*
-    public void buildPlay(JPanel mapEditor) {
-        // frissítsük a GUI-ban a sorok összegét
-        for (int i=0; i<dataEditor.getSumRows().length; i++) {
-            Component component = getComponentByName(dataPlay.getComponentMap(), "playsumRow"+i+"");
-
-            if (component instanceof JLabel) {
-                JLabel myLabel = (JLabel) component;
-                myLabel.setText(String.valueOf(dataEditor.getSumRows()[i]));
-            }
-        }
-
-        // frissítsük a GUI-ban az oszlopok összegét
-        for (int i=0; i<dataEditor.getSumCols().length; i++) {
-            Component component = getComponentByName(dataPlay.getComponentMap(),"playsumCol"+i+"");
-
-            if (component instanceof JLabel) {
-                JLabel myLabel = (JLabel) component;
-                myLabel.setText(String.valueOf(dataEditor.getSumCols()[i]));
-            }
-        }
-    }
-     */
 }
