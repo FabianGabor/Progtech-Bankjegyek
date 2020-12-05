@@ -9,6 +9,7 @@ public class Data {
     private int[][] squares;
     private int[] sumRows;
     private int[] sumCols;
+    private int[] count;
     HashMap<Integer, ArrayList<Coordinates.Coord>> map = new HashMap<>();
     private HashMap<String, Component> componentMap = new HashMap<>();
 
@@ -46,6 +47,10 @@ public class Data {
     public void setSumCols(int[] sumCols) {
         this.sumCols = sumCols;
     }
+
+    public int[] getCount() { return count; }
+
+    public void setCount(int[] count) { this.count = count; }
 
     public HashMap<Integer, ArrayList<Coordinates.Coord>> getMap() {
         return map;

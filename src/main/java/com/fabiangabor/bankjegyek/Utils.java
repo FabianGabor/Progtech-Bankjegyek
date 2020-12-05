@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Utils {
     Data dataEditor = new Data();
+    Data dataPlay = new Data();
 
     public Utils() {
     }
@@ -54,48 +55,22 @@ public class Utils {
         return tmp;
     }
 
-
-    public boolean collinear(Coordinates.Coord c1, Coordinates.Coord c2, Coordinates.Coord c3) {
-        return (c1.y - c2.y) * (c1.x - c3.x) == (c1.y - c3.y) * (c1.x - c2.x);
-    }
-
-
-    public boolean checkEditor(JTextField[][] squares) {
-        dataEditor.setSquares(convertJTextFieldToInt(squares));
-        dataEditor.setSize(squares.length);
-
-        int[] count = new int[dataEditor.getSize()];
-
-        HashMap<Integer, ArrayList<Coordinates.Coord>> map = new HashMap<>();
-
-        for (int i=0; i<dataEditor.getSize(); i++) {
-            for (int j = 0; j < dataEditor.getSize(); j++) {
-                int value = dataEditor.getSquares()[i][j];
-
-                if (value > 0) {
-                    if (count[value-1] > 3) return false; // ha egy bankjegy értékeiből több, mint 3 van
-                    count[value-1]++;
-                    Coordinates.Coord p = new Coordinates.Coord();
-                    p.x = i;
-                    p.y = j;
-
-                    map.putIfAbsent(value, new Coordinates.Coords().coords);
-                    map.get(value).add(p);
-                }
-            }
-        }
-        dataEditor.setMap(map);
-
-        // ellenőrizzük, hogy minden táblán szerelő bankjegy értékéből 3 db van
+    public boolean checkCount(int[] count) {
         for (int i : count) {
             if (!(i == 0 || i == 3)) {
                 return false;
             }
         }
+        return true;
+    }
 
-        // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
-        for (int i=0; i<dataEditor.getMap().size(); i++) {
-            for (Map.Entry<Integer, ArrayList<Coordinates.Coord>> entry : dataEditor.getMap().entrySet()) {
+    public boolean collinear(Coordinates.Coord c1, Coordinates.Coord c2, Coordinates.Coord c3) {
+        return (c1.y - c2.y) * (c1.x - c3.x) == (c1.y - c3.y) * (c1.x - c2.x);
+    }
+
+    public boolean checkCollinear(Data data) {
+        for (int i=0; i<data.getMap().size(); i++) {
+            for (Map.Entry<Integer, ArrayList<Coordinates.Coord>> entry : data.getMap().entrySet()) {
                 // nem alkotnak háromszöget, azaz egy vonalon vannak, de lehetnek átlósak
                 if (!collinear(entry.getValue().get(0), entry.getValue().get(1), entry.getValue().get(2))) return false;
 
@@ -109,30 +84,83 @@ public class Utils {
         return true;
     }
 
+    public HashMap<Integer, ArrayList<Coordinates.Coord>> buildDataMap (Data data) {
+        HashMap<Integer, ArrayList<Coordinates.Coord>> map = new HashMap<>();
+        int[] count = new int[5];
+        data.setCount(count);
 
-    public void calculateSums(JPanel mapEditor) {
+        for (int i=0; i<data.getSize(); i++) {
+            for (int j = 0; j < data.getSize(); j++) {
+                int value = data.getSquares()[i][j];
+
+                if (value > 0) {
+                    if (data.getCount()[value-1] > 3) return null; // ha egy bankjegy értékeiből több, mint 3 van
+                    data.getCount()[value-1]++;
+                    Coordinates.Coord p = new Coordinates.Coord();
+                    p.x = i;
+                    p.y = j;
+
+                    map.putIfAbsent(value, new Coordinates.Coords().coords);
+                    map.get(value).add(p);
+                }
+            }
+        }
+        return map;
+    }
+
+
+    public boolean checkEditor(JTextField[][] squares) {
+        dataEditor.setSquares(convertJTextFieldToInt(squares));
+        dataEditor.setSize(squares.length);
+        dataEditor.setMap(buildDataMap(dataEditor));
+
+        // ellenőrizzük, hogy minden táblán szerelő bankjegy értékéből 3 db van
+        if (!checkCount(dataEditor.getCount())) return false;
+
+        // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
+        if (!checkCollinear(dataEditor)) return false;
+
+        return true;
+    }
+
+    public void calculateSums(JPanel mapEditor, JPanel mapPlay) {
         dataEditor.setSumRows(this.calculateSumRows(dataEditor.getSquares()));
         dataEditor.setSumCols(this.calculateSumCols(dataEditor.getSquares()));
-
         dataEditor.setComponentMap(createComponentMap(mapEditor));
+
+        dataPlay.setSumRows(dataEditor.getSumRows());
+        dataPlay.setSumCols(dataEditor.getSumCols());
+        dataPlay.setComponentMap(createComponentMap(mapPlay));
 
         // frissítsük a GUI-ban a sorok összegét
         for (int i=0; i<dataEditor.getSumRows().length; i++) {
-            Component component = getComponentByName(dataEditor.getComponentMap(), "sumRow"+i+"");
+            Component componentEditor = getComponentByName(dataEditor.getComponentMap(), "sumRow"+i+"");
+            Component componentPlay = getComponentByName(dataPlay.getComponentMap(), "sumRow"+i+"");
 
-            if (component instanceof JLabel) {
-                JLabel myLabel = (JLabel) component;
+            if (componentEditor instanceof JLabel) {
+                JLabel myLabel = (JLabel) componentEditor;
                 myLabel.setText(String.valueOf(dataEditor.getSumRows()[i]));
+            }
+
+            if (componentPlay instanceof JLabel) {
+                JLabel myLabel = (JLabel) componentPlay;
+                myLabel.setText(String.valueOf(dataPlay.getSumRows()[i]));
             }
         }
 
         // frissítsük a GUI-ban az oszlopok összegét
         for (int i=0; i<dataEditor.getSumCols().length; i++) {
-            Component component = getComponentByName(dataEditor.getComponentMap(),"sumCol"+i+"");
+            Component componentEditor = getComponentByName(dataEditor.getComponentMap(),"sumCol"+i+"");
+            Component componentPlay = getComponentByName(dataPlay.getComponentMap(), "sumCol"+i+"");
 
-            if (component instanceof JLabel) {
-                JLabel myLabel = (JLabel) component;
+            if (componentEditor instanceof JLabel) {
+                JLabel myLabel = (JLabel) componentEditor;
                 myLabel.setText(String.valueOf(dataEditor.getSumCols()[i]));
+            }
+
+            if (componentPlay instanceof JLabel) {
+                JLabel myLabel = (JLabel) componentPlay;
+                myLabel.setText(String.valueOf(dataPlay.getSumCols()[i]));
             }
         }
     }
@@ -148,5 +176,27 @@ public class Utils {
 
     public Component getComponentByName(HashMap<String, Component> componentMap, String name) {
         return componentMap.getOrDefault(name, null);
+    }
+
+    public void buildPlay(JPanel mapEditor) {
+        // frissítsük a GUI-ban a sorok összegét
+        for (int i=0; i<dataEditor.getSumRows().length; i++) {
+            Component component = getComponentByName(dataPlay.getComponentMap(), "playsumRow"+i+"");
+
+            if (component instanceof JLabel) {
+                JLabel myLabel = (JLabel) component;
+                myLabel.setText(String.valueOf(dataEditor.getSumRows()[i]));
+            }
+        }
+
+        // frissítsük a GUI-ban az oszlopok összegét
+        for (int i=0; i<dataEditor.getSumCols().length; i++) {
+            Component component = getComponentByName(dataPlay.getComponentMap(),"playsumCol"+i+"");
+
+            if (component instanceof JLabel) {
+                JLabel myLabel = (JLabel) component;
+                myLabel.setText(String.valueOf(dataEditor.getSumCols()[i]));
+            }
+        }
     }
 }

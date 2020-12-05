@@ -27,7 +27,7 @@ public class GUI {
     }
 
     public final void initializeGui(int size) {
-        final JTextField[][] squares = new JTextField[size][size]; // pálya mérete
+        final JTextField[][] squaresEditor = new JTextField[size][size]; // pálya mérete
         final JTextField[][] squaresPlay = new JTextField[size][size]; // pálya mérete
 
         // alap ablak
@@ -76,7 +76,7 @@ public class GUI {
         tabbedPane.add(gamePanel);
         gui.add(tabbedPane, c);
 
-        // letrehozzuk a negyzeteket, 64x64 meretet lefoglalunk es elmentjuk a squares matrixban
+        // letrehozzuk a negyzeteket, 64x64 meretet lefoglalunk es elmentjuk a squaresEditor matrixban
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -94,7 +94,7 @@ public class GUI {
                 textField.setBackground(Color.WHITE);
                 textFieldPlay.setBackground(Color.WHITE);
 
-                squares[i][j] = textField;
+                squaresEditor[i][j] = textField;
                 squaresPlay[i][j] = textFieldPlay;
             }
         }
@@ -103,18 +103,17 @@ public class GUI {
         // az utolso oszlopba a sorok osszegenek fenntartott JLabel kerul
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                mapEditor.add(squares[i][j]); // ez tárolja az 5x5 matrixot
+                mapEditor.add(squaresEditor[i][j]); // ez tárolja az 5x5 matrixot
                 mapPlay.add(squaresPlay[i][j]);
             }
             // jobb oszlop osszegek helye
             JLabel sum = new JLabel("", SwingConstants.CENTER);
             sum.setForeground(Color.white);
-            //sum.putClientProperty("sumRow", i);
             sum.setName("sumRow" + "" + i + "");
             mapEditor.add(sum);
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
-            //sumPlay.putClientProperty("id-play", i*10*10);
+            sumPlay.setForeground(Color.white);
             sumPlay.setName("sumRow" + "" + i + "");
             mapPlay.add(sumPlay);
         }
@@ -126,6 +125,7 @@ public class GUI {
             mapEditor.add(sum);            
 
             JLabel sumPlay = new JLabel("", SwingConstants.CENTER);
+            sumPlay.setForeground(Color.white);
             sumPlay.setName("sumCol" + "" + j + "");
             mapPlay.add(sumPlay);
         }
@@ -142,11 +142,21 @@ public class GUI {
         controlEditor.add(checkEditorBtn);
         controlPlay.add(checkPlayBtn);
 
+
+        Utils utils = new Utils();
         checkEditorBtn.addActionListener(e -> {
-            Utils utils = new Utils();
-            if (utils.checkEditor(squares)) {
-                //JOptionPane.showMessageDialog(gui, "Minden rendben!");
-                utils.calculateSums(mapEditor);
+            if (utils.checkEditor(squaresEditor)) {
+                //JOptionPane.showMessageDialog(gui, "Minden rendben! Lehet játszani");
+                utils.calculateSums(mapEditor, mapPlay);
+            }
+            else {
+                JOptionPane.showMessageDialog(gui, "Baj van!");
+            }
+        });
+
+        checkPlayBtn.addActionListener(e -> {
+            if (utils.checkEditor(squaresPlay)) {
+                utils.buildPlay(mapPlay);
             }
             else {
                 JOptionPane.showMessageDialog(gui, "Baj van!");
