@@ -155,8 +155,8 @@ public class GUI {
         });
 
         checkPlayBtn.addActionListener(e -> {
-            if (utils.checkEditor(squaresPlay)) {
-                utils.buildPlay(mapPlay);
+            if (utils.checkPlay(squaresPlay)) {
+                JOptionPane.showMessageDialog(gui, "Minden rendben!");
             }
             else {
                 JOptionPane.showMessageDialog(gui, "Baj van!");

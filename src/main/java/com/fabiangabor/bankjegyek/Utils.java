@@ -108,7 +108,6 @@ public class Utils {
         return map;
     }
 
-
     public boolean checkEditor(JTextField[][] squares) {
         dataEditor.setSquares(convertJTextFieldToInt(squares));
         dataEditor.setSize(squares.length);
@@ -119,6 +118,35 @@ public class Utils {
 
         // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
         if (!checkCollinear(dataEditor)) return false;
+
+        return true;
+    }
+
+    public boolean checkRowColSums(Data data) {
+        int[] rowSums = calculateSumRows(data.getSquares());
+        int[] colSums = calculateSumCols(data.getSquares());        
+
+        if (!Arrays.equals(rowSums, data.getSumRows())) return false;
+        if (!Arrays.equals(colSums, data.getSumCols())) return false;
+
+        return true;
+    }
+
+    public boolean checkPlay(JTextField[][] squares) {
+        dataPlay.setSquares(convertJTextFieldToInt(squares));
+        dataPlay.setSize(squares.length);
+        dataPlay.setMap(buildDataMap(dataPlay));
+
+        // ellenőrizzük, hogy minden táblán szerelő bankjegy értékéből 3 db van
+        if (!checkCount(dataPlay.getCount())) return false;
+
+        // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
+        if (!checkCollinear(dataPlay)) return false;
+
+        if (!(checkRowColSums(dataPlay)))
+            return false;
+
+        //System.out.println(dataPlay.getSquares());
 
         return true;
     }
@@ -178,6 +206,7 @@ public class Utils {
         return componentMap.getOrDefault(name, null);
     }
 
+    /*
     public void buildPlay(JPanel mapEditor) {
         // frissítsük a GUI-ban a sorok összegét
         for (int i=0; i<dataEditor.getSumRows().length; i++) {
@@ -199,4 +228,5 @@ public class Utils {
             }
         }
     }
+     */
 }
