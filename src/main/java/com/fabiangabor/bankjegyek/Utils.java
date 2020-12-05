@@ -110,7 +110,7 @@ public class Utils {
     }
 
 
-    public void buildMap(JPanel mapEditor) {
+    public void calculateSums(JPanel mapEditor) {
         dataEditor.setSumRows(this.calculateSumRows(dataEditor.getSquares()));
         dataEditor.setSumCols(this.calculateSumCols(dataEditor.getSquares()));
 
@@ -149,5 +149,4 @@ public class Utils {
     public Component getComponentByName(HashMap<String, Component> componentMap, String name) {
         return componentMap.getOrDefault(name, null);
     }
-
 }

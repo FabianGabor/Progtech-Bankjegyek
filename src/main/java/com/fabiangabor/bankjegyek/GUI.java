@@ -146,7 +146,7 @@ public class GUI {
             Utils utils = new Utils();
             if (utils.checkEditor(squares)) {
                 //JOptionPane.showMessageDialog(gui, "Minden rendben!");
-                utils.buildMap(mapEditor);
+                utils.calculateSums(mapEditor);
             }
             else {
                 JOptionPane.showMessageDialog(gui, "Baj van!");
