@@ -5,32 +5,12 @@ import java.awt.*;
 import java.util.*;
 
 public class Utils {
-    private static final Color[] colors = {
-            Colors.pink,
-            Colors.purple,
-            Colors.blue,
-            Colors.teal,
-            Colors.green
-    };
-
-    private int[][] editorSquares;
-    private int[] editorSumRows;
-    private int[] editorSumCols;
-
-    HashMap<String, Component> componentMap = new HashMap<>();
+    Data dataEditor = new Data();
 
     public Utils() {
     }
 
-    public int[][] getEditorSquares() {
-        return editorSquares;
-    }
-
-    public void setEditorSquares(int[][] editorSquares) {
-        this.editorSquares = editorSquares;
-    }
-
-    public void convertJTextFieldToInt(JTextField[][] squares) {
+    public int[][] convertJTextFieldToInt(JTextField[][] squares) {
         int[][] tmp = new int[squares.length][squares.length];
         for (int i=0; i<squares.length; i++) {
             for (int j = 0; j < squares.length; j++) {
@@ -41,50 +21,34 @@ public class Utils {
                 }
             }
         }
-        setEditorSquares(tmp);
+        return tmp;
     }
 
-    public int[] getEditorSumRows() {
-        return editorSumRows;
-    }
+    public int[] calculateSumRows(int[][] squares) {
+        int[] tmp = new int[squares.length];
 
-    public void setEditorSumRows() {
-        this.editorSumRows = calculateEditorSumRows();
-    }
-
-    public int[] calculateEditorSumRows() {
-        int[] tmp = new int[editorSquares.length];
-
-        for (int i=0; i<editorSquares.length; i++) {
-            int[] count = new int[editorSquares.length+1];
-            for (int j=0; j<editorSquares.length; j++) {
-                if (count[editorSquares[i][j]] == 0) {
-                    tmp[i] += editorSquares[i][j];
+        for (int i=0; i<squares.length; i++) {
+            int[] count = new int[squares.length+1];
+            for (int j=0; j<squares.length; j++) {
+                if (count[squares[i][j]] == 0) {
+                    tmp[i] += squares[i][j];
                 }
-                count[editorSquares[i][j]]++;
+                count[squares[i][j]]++;
             }
         }
         return tmp;
     }
 
-    public int[] getEditorSumCols() {
-        return editorSumCols;
-    }
+    public int[] calculateSumCols(int[][] squares) {
+        int[] tmp = new int[squares.length];
 
-    public void setEditorSumCols() {
-        this.editorSumCols = calculateEditorSumCols();
-    }
-
-    public int[] calculateEditorSumCols() {
-        int[] tmp = new int[editorSquares.length];
-
-        for (int i=0; i<editorSquares.length; i++) {
-            int[] count = new int[editorSquares.length+1];
-            for (int j=0; j<editorSquares.length; j++) {
-                if (count[editorSquares[j][i]] == 0) {
-                    tmp[i] += editorSquares[j][i];
+        for (int i=0; i<squares.length; i++) {
+            int[] count = new int[squares.length+1];
+            for (int[] square : squares) {
+                if (count[square[i]] == 0) {
+                    tmp[i] += square[i];
                 }
-                count[editorSquares[j][i]]++;
+                count[square[i]]++;
             }
         }
         return tmp;
@@ -95,24 +59,21 @@ public class Utils {
         return (c1.y - c2.y) * (c1.x - c3.x) == (c1.y - c3.y) * (c1.x - c2.x);
     }
 
-    public int[] count() {
-        return null;
-    }
 
     public boolean checkEditor(JTextField[][] squares) {
-        convertJTextFieldToInt(squares);
+        dataEditor.setSquares(convertJTextFieldToInt(squares));
+        dataEditor.setSize(squares.length);
 
-        int size = squares.length;
-        int[] count = new int[size];
+        int[] count = new int[dataEditor.getSize()];
 
         HashMap<Integer, ArrayList<Coordinates.Coord>> map = new HashMap<>();
 
-        for (int i=0; i<size; i++) {
-            for (int j = 0; j < size; j++) {
-                int value = this.editorSquares[i][j];
+        for (int i=0; i<dataEditor.getSize(); i++) {
+            for (int j = 0; j < dataEditor.getSize(); j++) {
+                int value = dataEditor.getSquares()[i][j];
 
                 if (value > 0) {
-                    if (count[value-1] > 3) return false;
+                    if (count[value-1] > 3) return false; // ha egy bankjegy értékeiből több, mint 3 van
                     count[value-1]++;
                     Coordinates.Coord p = new Coordinates.Coord();
                     p.x = i;
@@ -123,6 +84,7 @@ public class Utils {
                 }
             }
         }
+        dataEditor.setMap(map);
 
         // ellenőrizzük, hogy minden táblán szerelő bankjegy értékéből 3 db van
         for (int i : count) {
@@ -132,9 +94,8 @@ public class Utils {
         }
 
         // ellenőrizzük, hogy minden bankjegy értékei egy vonalban legyenek
-        for (int i=0; i<map.size(); i++) {
-            System.out.println(map.entrySet());
-            for (Map.Entry<Integer, ArrayList<Coordinates.Coord>> entry : map.entrySet()) {
+        for (int i=0; i<dataEditor.getMap().size(); i++) {
+            for (Map.Entry<Integer, ArrayList<Coordinates.Coord>> entry : dataEditor.getMap().entrySet()) {
                 // nem alkotnak háromszöget, azaz egy vonalon vannak, de lehetnek átlósak
                 if (!collinear(entry.getValue().get(0), entry.getValue().get(1), entry.getValue().get(2))) return false;
 
@@ -148,46 +109,45 @@ public class Utils {
         return true;
     }
 
-    public void buildMap(JPanel mapEditor) {
-        System.out.println(editorSquares);
-        setEditorSumRows();
-        setEditorSumCols();
 
-        createComponentMap(mapEditor);
+    public void buildMap(JPanel mapEditor) {
+        dataEditor.setSumRows(this.calculateSumRows(dataEditor.getSquares()));
+        dataEditor.setSumCols(this.calculateSumCols(dataEditor.getSquares()));
+
+        dataEditor.setComponentMap(createComponentMap(mapEditor));
+
         // frissítsük a GUI-ban a sorok összegét
-        for (int i=0; i<getEditorSumRows().length; i++) {
-            Component component = getComponentByName("sumRow"+i+"");
-            int index = Integer.parseInt(component.getName().replaceAll("[^0-9]", ""));
+        for (int i=0; i<dataEditor.getSumRows().length; i++) {
+            Component component = getComponentByName(dataEditor.getComponentMap(), "sumRow"+i+"");
 
             if (component instanceof JLabel) {
                 JLabel myLabel = (JLabel) component;
-                myLabel.setText(String.valueOf(editorSumRows[i]));
+                myLabel.setText(String.valueOf(dataEditor.getSumRows()[i]));
             }
         }
 
         // frissítsük a GUI-ban az oszlopok összegét
-        for (int i=0; i<getEditorSumCols().length; i++) {
-            Component component = getComponentByName("sumCol"+i+"");
-            int index = Integer.parseInt(component.getName().replaceAll("[^0-9]", ""));
+        for (int i=0; i<dataEditor.getSumCols().length; i++) {
+            Component component = getComponentByName(dataEditor.getComponentMap(),"sumCol"+i+"");
 
             if (component instanceof JLabel) {
                 JLabel myLabel = (JLabel) component;
-                myLabel.setText(String.valueOf(editorSumCols[i]));
+                myLabel.setText(String.valueOf(dataEditor.getSumCols()[i]));
             }
         }
     }
 
-    public void createComponentMap(JPanel frame) {
+    public HashMap<String, Component> createComponentMap(JPanel frame) {
+        HashMap<String, Component> componentMap = new HashMap<>();
         Component[] components = frame.getComponents();
-        for (int i=0; i < components.length; i++) {
-            componentMap.put(components[i].getName(), components[i]);
+        for (Component component : components) {
+            componentMap.put(component.getName(), component);
         }
+        return componentMap;
     }
 
-    public Component getComponentByName(String name) {
-        if (componentMap.containsKey(name)) {
-            return (Component) componentMap.get(name);
-        }
-        else return null;
+    public Component getComponentByName(HashMap<String, Component> componentMap, String name) {
+        return componentMap.getOrDefault(name, null);
     }
+
 }
