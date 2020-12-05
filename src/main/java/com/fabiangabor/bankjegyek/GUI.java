@@ -96,6 +96,24 @@ public class GUI {
 
                 squaresEditor[i][j] = textField;
                 squaresPlay[i][j] = textFieldPlay;
+                Colors colors = new Colors();
+                textFieldEditor.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+                    try {
+                        textFieldEditor.setBackground(colors.getColors()[Integer.parseInt(textFieldEditor.getText())-1]);
+                    }
+                    catch (Exception exception) {
+                        textFieldEditor.setBackground(Color.white);
+                    }
+                });
+                textFieldPlay.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+                    try {
+                        textFieldPlay.setBackground(colors.getColors()[Integer.parseInt(textFieldEditor.getText())-1]);
+                    }
+                    catch (Exception exception) {
+                        textFieldPlay.setBackground(Color.white);
+                    }
+                });
+
             }
         }
 

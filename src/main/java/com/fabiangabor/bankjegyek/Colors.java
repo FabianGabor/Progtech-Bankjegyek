@@ -17,4 +17,11 @@ public class Colors {
             teal,
             green
     };
+
+    public Colors() {
+    }
+
+    public Color[] getColors() {
+        return colors;
+    }
 }
