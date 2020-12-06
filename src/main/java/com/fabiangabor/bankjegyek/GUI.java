@@ -4,12 +4,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Létrehozza a GUI-t és meghívja az adatfeldolgozó és ellenőrző metódusokat
+ */
 public class GUI {
     private final JPanel gui = new JPanel(new GridBagLayout());
     private final GridBagConstraints c = new GridBagConstraints();
 
-
-
+    /**
+     * @param size pálya mérete
+     */
     public GUI(int size) {
         initializeGui(size);
 
@@ -26,6 +30,9 @@ public class GUI {
         SwingUtilities.invokeLater(r);
     }
 
+    /**
+     * @param size pálya mérete
+     */
     public final void initializeGui(int size) {
         final JTextField[][] squaresEditor = new JTextField[size][size]; // pálya mérete
         final JTextField[][] squaresPlay = new JTextField[size][size]; // pálya mérete
