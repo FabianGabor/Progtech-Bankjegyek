@@ -3,6 +3,7 @@ package com.fabiangabor.bankjegyek;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class UtilsTest {
 
     @Test
@@ -55,5 +56,57 @@ class UtilsTest {
 
     @Test
     void getComponentByName() {
+    }
+
+    @Test
+    void testConvertJTextFieldToInt() {
+    }
+
+    @Test
+    void testCalculateSumRows() {
+    }
+
+    @Test
+    void testCalculateSumCols() {
+    }
+
+    @Test
+    void testCheckCount() {
+    }
+
+    @Test
+    void testCollinear() {
+    }
+
+    @Test
+    void testCheckCollinear() {
+    }
+
+    @Test
+    void testBuildDataMap() {
+    }
+
+    @Test
+    void testCheckEditor() {
+    }
+
+    @Test
+    void testCheckRowColSums() {
+    }
+
+    @Test
+    void testCheckPlay() {
+    }
+
+    @Test
+    void testCalculateSums() {
+    }
+
+    @Test
+    void testCreateComponentMap() {
+    }
+
+    @Test
+    void testGetComponentByName() {
     }
 }
