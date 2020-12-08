@@ -9,9 +9,14 @@ public class Bankjegyek {
      *             Alapesetben, ennek hianyaban 5x5
      */
     public static void main(String[] args) {
-        int size = 5;
-        if (args.length > 0)
-            size = Integer.parseInt(args[0]);
+        int size;
+        if (args.length > 0) {
+            try {
+                size = Integer.parseInt(args[0]);
+            } catch (NumberFormatException numberFormatException){
+                size = 5;
+            }
+        }
         new GUI(size);
     }
 }
