@@ -1,5 +1,6 @@
 package com.fabiangabor.bankjegyek;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,12 +21,15 @@ public class UtilsTest {
         JTextField[][] jTextFieldArray;
         int[][] intArray;
     }
-    static ArrayList<DataContainer> dataArray = new ArrayList<>();
+    DataContainer dataContainer = new DataContainer();
+
+    static ArrayList<DataContainer> dataArray = new ArrayList<DataContainer>();
 
     private static IntStream range() {
         return IntStream.range(1, 20);
     }
 
+    @Order(1)
     @ParameterizedTest
     @MethodSource("range")
     public void UtilsTestInit(int n) {
@@ -34,33 +38,60 @@ public class UtilsTest {
 
         for (int i=0; i<n; i++) {
             for (int j=0; j<n; j++) {
-                int randInt = rand.nextInt(1000);
+                int randInt = rand.nextInt(n);
                 jTextFieldArray[i][j] = new JTextField();
                 jTextFieldArray[i][j].setText(String.valueOf(randInt));
                 intArray[i][j] = randInt;
             }
         }
 
-        DataContainer dataContainer = new DataContainer();
         dataContainer.intArray = intArray;
         dataContainer.jTextFieldArray = jTextFieldArray;
         dataArray.add(dataContainer);
+
+        convertJTextFieldToInt(n);
+        calculateSumRows(n);
+        calculateSumCols(n);
     }
 
-    @ParameterizedTest
-    @MethodSource("range")
+    //@Order(2)
+    //@ParameterizedTest
+    //@MethodSource("range")
     public void convertJTextFieldToInt(int n) {
+        Assertions.assertArrayEquals(dataArray.get(n-1).intArray, utils.convertJTextFieldToInt(dataArray.get(n-1).jTextFieldArray));
+    }
+
+    //@Order(3)
+    //@ParameterizedTest
+    //@MethodSource("range")
+    public void calculateSumRows(int n) {
+        int[] sums = new int[n];
+
         for (int i=0; i<n; i++) {
-            Assertions.assertArrayEquals(dataArray.get(i).intArray, utils.convertJTextFieldToInt(dataArray.get(i).jTextFieldArray));
+            int[] count = new int[dataArray.get(n-1).intArray.length+1];
+            for (int j=0; j<n; j++) {
+                if (count[dataArray.get(n - 1).intArray[i][j]] == 0) {
+                    sums[i] += dataArray.get(n - 1).intArray[i][j];
+                    count[dataArray.get(n - 1).intArray[i][j]]++;
+                }
+            }
         }
+        Assertions.assertArrayEquals(sums, utils.calculateSumRows(dataArray.get(n-1).intArray));
     }
 
-    @Test
-    public void calculateSumRows() {
-    }
+    public void calculateSumCols(int n) {
+        int[] sums = new int[n];
 
-    @Test
-    public void calculateSumCols() {
+        for (int j=0; j<n; j++) {
+            int[] count = new int[dataArray.get(n-1).intArray.length+1];
+            for (int i=0; i<n; i++) {
+                if (count[dataArray.get(n - 1).intArray[i][j]] == 0) {
+                    sums[j] += dataArray.get(n - 1).intArray[i][j];
+                    count[dataArray.get(n - 1).intArray[i][j]]++;
+                }
+            }
+        }
+        Assertions.assertArrayEquals(sums, utils.calculateSumCols(dataArray.get(n-1).intArray));
     }
 
     @Test
