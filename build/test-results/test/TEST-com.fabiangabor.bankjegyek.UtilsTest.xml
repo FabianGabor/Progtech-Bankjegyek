@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.fabiangabor.bankjegyek.UtilsTest" tests="50" skipped="0" failures="0" errors="0" timestamp="2020-12-13T19:48:55" hostname="REACTOR-Ubuntu" time="0.455">
+  <properties/>
+  <testcase name="getComponentByName()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.007"/>
+  <testcase name="calculateSumCols()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="calculateSumRows()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="calculateSums()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.003"/>
+  <testcase name="checkCollinear()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="checkCount()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="buildDataMap()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="checkEditor()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="checkPlay()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="UtilsTestInit(int)[1]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.147"/>
+  <testcase name="UtilsTestInit(int)[2]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.002"/>
+  <testcase name="UtilsTestInit(int)[3]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.004"/>
+  <testcase name="UtilsTestInit(int)[4]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.006"/>
+  <testcase name="UtilsTestInit(int)[5]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.007"/>
+  <testcase name="UtilsTestInit(int)[6]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.01"/>
+  <testcase name="UtilsTestInit(int)[7]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.012"/>
+  <testcase name="UtilsTestInit(int)[8]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.012"/>
+  <testcase name="UtilsTestInit(int)[9]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.014"/>
+  <testcase name="UtilsTestInit(int)[10]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.014"/>
+  <testcase name="UtilsTestInit(int)[11]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.016"/>
+  <testcase name="UtilsTestInit(int)[12]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.016"/>
+  <testcase name="UtilsTestInit(int)[13]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.016"/>
+  <testcase name="UtilsTestInit(int)[14]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.018"/>
+  <testcase name="UtilsTestInit(int)[15]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.018"/>
+  <testcase name="UtilsTestInit(int)[16]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.016"/>
+  <testcase name="UtilsTestInit(int)[17]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.019"/>
+  <testcase name="UtilsTestInit(int)[18]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.02"/>
+  <testcase name="UtilsTestInit(int)[19]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.021"/>
+  <testcase name="checkRowColSums()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="createComponentMap()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[1]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.002"/>
+  <testcase name="convertJTextFieldToInt(int)[2]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[3]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[4]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[5]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[6]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[7]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[8]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[9]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[10]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[11]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[12]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[13]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[14]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <testcase name="convertJTextFieldToInt(int)[15]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[16]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[17]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[18]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="convertJTextFieldToInt(int)[19]" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.001"/>
+  <testcase name="collinear()" classname="com.fabiangabor.bankjegyek.UtilsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
