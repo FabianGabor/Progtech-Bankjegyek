@@ -47,8 +47,12 @@ public class UtilsTest {
         dataArray.add(dataContainer);
     }
 
-    @Test
-    public void convertJTextFieldToInt() {
+    @ParameterizedTest
+    @MethodSource("range")
+    public void convertJTextFieldToInt(int n) {
+        for (int i=0; i<n; i++) {
+            Assertions.assertArrayEquals(dataArray.get(i).intArray, utils.convertJTextFieldToInt(dataArray.get(i).jTextFieldArray));
+        }
     }
 
     @Test
