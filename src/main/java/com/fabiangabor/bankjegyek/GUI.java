@@ -185,6 +185,10 @@ public class GUI {
                 JOptionPane.showMessageDialog(gui, "Baj van!");
             }
         });
+        saveToFileBtn.addActionListener(e -> {
+            JSON json = new JSON(utils.convertJTextFieldToInt(squaresEditor));
+            json.toFile("output/array.json");
+        });
     }
 
     public JButton setButtonStyle (String text) {
