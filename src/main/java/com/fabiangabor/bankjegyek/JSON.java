@@ -36,8 +36,6 @@ public class JSON {
 
     public void fromFile(String path) {
         Assertions.assertNotEquals(0, path.length(), "File path is empty!");
-
-
     }
 
     private String toJson() {
