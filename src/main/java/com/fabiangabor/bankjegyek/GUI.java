@@ -3,6 +3,7 @@ package com.fabiangabor.bankjegyek;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.SQLException;
 
 /**
  * Létrehozza a GUI-t és meghívja az adatfeldolgozó és ellenőrző metódusokat
@@ -188,6 +189,14 @@ public class GUI {
         saveToFileBtn.addActionListener(e -> {
             JSON json = new JSON(utils.convertJTextFieldToInt(squaresEditor));
             json.toFile("output/array.json");
+        });
+        saveToDbBtn.addActionListener(e -> {
+            Database db = new Database();
+            try {
+                db.insert(utils.convertJTextFieldToInt(squaresEditor));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         });
     }
 
