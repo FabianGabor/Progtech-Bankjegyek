@@ -156,16 +156,14 @@ public class GUI {
             mapPlay.add(sumPlay);
         }
 
-        JButton checkEditorBtn = new JButton("Check");
-        JButton checkPlayBtn = new JButton("Finish");
-
-        checkEditorBtn.setBackground(Colors.darkGray);
-        checkPlayBtn.setBackground(Colors.darkGray);
-
-        checkEditorBtn.setForeground(Color.white);
-        checkPlayBtn.setForeground(Color.white);
+        JButton checkEditorBtn = setButtonStyle("Check");
+        JButton checkPlayBtn = setButtonStyle("Finish");
+        JButton saveToFileBtn = setButtonStyle("Save to file");
+        JButton saveToDbBtn = setButtonStyle("Save to DB");
 
         controlEditor.add(checkEditorBtn);
+        controlEditor.add(saveToFileBtn);
+        controlEditor.add(saveToDbBtn);
         controlPlay.add(checkPlayBtn);
 
         Utils utils = new Utils();
@@ -187,5 +185,12 @@ public class GUI {
                 JOptionPane.showMessageDialog(gui, "Baj van!");
             }
         });
+    }
+
+    public JButton setButtonStyle (String text) {
+        JButton jButton = new JButton(text);
+        jButton.setBackground(Colors.darkGray);
+        jButton.setForeground(Color.white);
+        return jButton;
     }
 }
