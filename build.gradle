@@ -10,5 +10,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation ('org.junit.jupiter:junit-jupiter:5.7.0')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
 }

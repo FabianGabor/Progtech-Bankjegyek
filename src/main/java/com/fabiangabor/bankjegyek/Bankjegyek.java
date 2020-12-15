@@ -9,7 +9,7 @@ public class Bankjegyek {
      *             Alapesetben, ennek hianyaban 5x5
      */
     public static void main(String[] args) {
-        int size;
+        int size = 5;
         if (args.length > 0) {
             try {
                 size = Integer.parseInt(args[0]);

@@ -3,6 +3,7 @@ package com.fabiangabor.bankjegyek;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.SQLException;
 
 /**
  * Létrehozza a GUI-t és meghívja az adatfeldolgozó és ellenőrző metódusokat
@@ -156,16 +157,14 @@ public class GUI {
             mapPlay.add(sumPlay);
         }
 
-        JButton checkEditorBtn = new JButton("Check");
-        JButton checkPlayBtn = new JButton("Finish");
-
-        checkEditorBtn.setBackground(Colors.darkGray);
-        checkPlayBtn.setBackground(Colors.darkGray);
-
-        checkEditorBtn.setForeground(Color.white);
-        checkPlayBtn.setForeground(Color.white);
+        JButton checkEditorBtn = setButtonStyle("Check");
+        JButton checkPlayBtn = setButtonStyle("Finish");
+        JButton saveToFileBtn = setButtonStyle("Save to file");
+        JButton saveToDbBtn = setButtonStyle("Save to DB");
 
         controlEditor.add(checkEditorBtn);
+        controlEditor.add(saveToFileBtn);
+        controlEditor.add(saveToDbBtn);
         controlPlay.add(checkPlayBtn);
 
         Utils utils = new Utils();
@@ -187,5 +186,24 @@ public class GUI {
                 JOptionPane.showMessageDialog(gui, "Baj van!");
             }
         });
+        saveToFileBtn.addActionListener(e -> {
+            JSON json = new JSON(utils.convertJTextFieldToInt(squaresEditor));
+            json.toFile("output/array.json");
+        });
+        saveToDbBtn.addActionListener(e -> {
+            Database db = new Database();
+            try {
+                db.insert(utils.convertJTextFieldToInt(squaresEditor));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+    }
+
+    public JButton setButtonStyle (String text) {
+        JButton jButton = new JButton(text);
+        jButton.setBackground(Colors.darkGray);
+        jButton.setForeground(Color.white);
+        return jButton;
     }
 }
